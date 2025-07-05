@@ -53,7 +53,6 @@ export const usePromptStore = createPersistStore(
     counter: 0,
     prompts: {} as Record<string, Prompt>,
   },
-
   (set, get) => ({
     add(prompt: Prompt) {
       const prompts = get().prompts;
@@ -101,9 +100,7 @@ export const usePromptStore = createPersistStore(
 
     getUserPrompts() {
       const userPrompts = Object.values(get().prompts ?? {});
-      userPrompts.sort((a, b) =>
-        b.id && a.id ? b.createdAt - a.createdAt : 0,
-      );
+      userPrompts.sort((a, b) => b.id && a.id ? b.createdAt - a.createdAt : 0);
       return userPrompts;
     },
 
@@ -159,7 +156,7 @@ export const usePromptStore = createPersistStore(
       fetch(PROMPT_URL)
         .then((res) => res.json())
         .then((res) => {
-          let fetchPrompts = [res.en, res.tw, res.cn];
+          let fetchPrompts = [res.cn];
           if (getLang() === "cn") {
             fetchPrompts = fetchPrompts.reverse();
           }
@@ -180,8 +177,8 @@ export const usePromptStore = createPersistStore(
           const allPromptsForSearch = builtinPrompts
             .reduce((pre, cur) => pre.concat(cur), [])
             .filter((v) => !!v.title && !!v.content);
-          SearchService.count.builtin =
-            res.en.length + res.cn.length + res.tw.length;
+          SearchService.count.builtin = res.en.length + res.cn.length +
+            res.tw.length;
           SearchService.init(allPromptsForSearch, userPrompts);
         });
     },
