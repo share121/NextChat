@@ -1,9 +1,11 @@
 import fs from "fs";
 import path from "path";
-
+import { CN_MASKS } from "./cn";
 import { type BuiltinMask } from "./typing";
 
-const BUILTIN_MASKS: Record<string, BuiltinMask[]> = {};
+const BUILTIN_MASKS: Record<string, BuiltinMask[]> = {
+  cn: CN_MASKS,
+};
 
 const dirname = path.dirname(__filename);
 
